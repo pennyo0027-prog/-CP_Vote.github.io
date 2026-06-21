@@ -1,0 +1,459 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>心動的信號：福岡篇｜CP 心動投票</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+      background: linear-gradient(135deg, #fff7ef, #f4eadf);
+      color: #3b2a22;
+    }
+
+    header {
+      text-align: center;
+      padding: 52px 20px 24px;
+    }
+
+    header h1 {
+      font-size: 42px;
+      margin: 0 0 12px;
+      color: #9b2c2c;
+      letter-spacing: 2px;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 18px;
+      color: #6b4f3f;
+    }
+
+    .notice {
+      max-width: 900px;
+      margin: 0 auto 20px;
+      background: #fff3cd;
+      color: #6b4f3f;
+      padding: 14px 18px;
+      border-radius: 14px;
+      text-align: center;
+      font-size: 16px;
+      box-shadow: 0 4px 14px rgba(83, 55, 38, 0.08);
+    }
+
+    .leader-board {
+      max-width: 900px;
+      margin: 0 auto 30px;
+      background: #fffdf8;
+      border: 2px solid #d9a441;
+      border-radius: 22px;
+      padding: 20px 24px;
+      text-align: center;
+      box-shadow: 0 8px 22px rgba(83, 55, 38, 0.12);
+    }
+
+    .leader-board h2 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      color: #7a2e1d;
+    }
+
+    #leader-name {
+      font-size: 21px;
+      font-weight: bold;
+      color: #b94035;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .card {
+      background: #fffdf8;
+      border-radius: 24px;
+      padding: 26px 24px;
+      box-shadow: 0 8px 24px rgba(83, 55, 38, 0.15);
+      text-align: center;
+      border: 2px solid transparent;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: #d9a441;
+    }
+
+    .area-name {
+      font-size: 14px;
+      color: #a05a3b;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .cp-name {
+      font-size: 25px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #7a2e1d;
+    }
+
+    .members {
+      font-size: 16px;
+      margin-bottom: 14px;
+      color: #4d372d;
+      line-height: 1.6;
+    }
+
+    .tagline {
+      font-size: 15px;
+      color: #7b6658;
+      min-height: 70px;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    button {
+      border: none;
+      background: #b94035;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 999px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    button:hover:enabled {
+      background: #8f2f27;
+      transform: scale(1.05);
+    }
+
+    button:disabled {
+      background: #b9a79d;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .result {
+      margin-top: 18px;
+      font-size: 15px;
+      color: #5f4437;
+    }
+
+    .bar-wrap {
+      width: 100%;
+      height: 12px;
+      background: #eaded0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #d65a4a, #d9a441);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    .bottom-area {
+      text-align: center;
+      margin: 34px 20px 56px;
+    }
+
+    .bottom-area h2 {
+      font-size: 22px;
+      color: #5f4437;
+      margin-bottom: 10px;
+    }
+
+    #vote-status {
+      margin-top: 12px;
+      font-size: 18px;
+      color: #8f2f27;
+      font-weight: bold;
+    }
+
+    .admin-reset-btn {
+      margin-top: 22px;
+      background: #6f5b4c;
+      font-size: 15px;
+    }
+
+    .admin-reset-btn:hover:enabled {
+      background: #4d3c31;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #8a7363;
+      font-size: 14px;
+    }
+
+    @media (max-width: 760px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+
+      header h1 {
+        font-size: 32px;
+      }
+
+      .cp-name {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>心動的信號：福岡篇</h1>
+    <p>四組 CP 中，你最想把心動票投給誰？</p>
+  </header>
+
+  <div class="notice">
+    本投票採單次投票制，一次一票。
+  </div>
+
+  <section class="leader-board">
+    <h2>目前心動領先</h2>
+    <div id="leader-name">尚未有 CP 領先</div>
+  </section>
+
+  <main class="container">
+
+    <section class="card">
+      <div class="area-name">福岡・博多代表</div>
+      <div class="cp-name">博多湯辣戀曲</div>
+      <div class="members">博多水炊鍋男 × 辛子明太子女</div>
+      <div class="tagline">
+        一個慢慢熬出溫柔，一個瞬間點亮味覺。博多的湯氣與辣味，在心動小屋裡成為最鮮明的靠近。
+      </div>
+      <button class="vote-btn" onclick="vote('cp1', '博多湯辣戀曲')">投給這組 CP</button>
+      <div class="result">
+        <span id="cp1-count">0</span> 票｜<span id="cp1-percent">0</span>%
+        <div class="bar-wrap"><div class="bar" id="cp1-bar"></div></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="area-name">北九州代表</div>
+      <div class="cp-name">港町焗香心動</div>
+      <div class="members">小倉燒咖哩男 × 門司港香蕉女</div>
+      <div class="tagline">
+        他像焗烤後仍在發熱的咖哩，她像門司港吹來的甜風。北九州的硬派與復古，在海風裡慢慢靠近。
+      </div>
+      <button class="vote-btn" onclick="vote('cp2', '港町焗香心動')">投給這組 CP</button>
+      <div class="result">
+        <span id="cp2-count">0</span> 票｜<span id="cp2-percent">0</span>%
+        <div class="bar-wrap"><div class="bar" id="cp2-bar"></div></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="area-name">筑豐代表</div>
+      <div class="cp-name">煤都辛甜記憶</div>
+      <div class="members">成金饅頭男 × 添田柚子胡椒女</div>
+      <div class="tagline">
+        一個承載煤礦時代的甜，一個帶來山區辛香的清醒。筑豐的歷史厚度，在辛甜之間留下餘溫。
+      </div>
+      <button class="vote-btn" onclick="vote('cp3', '煤都辛甜記憶')">投給這組 CP</button>
+      <div class="result">
+        <span id="cp3-count">0</span> 票｜<span id="cp3-percent">0</span>%
+        <div class="bar-wrap"><div class="bar" id="cp3-bar"></div></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="area-name">筑後代表</div>
+      <div class="cp-name">炭火茶香餘韻</div>
+      <div class="members">久留米燒鳥男 × 八女茶女</div>
+      <div class="tagline">
+        一個帶來炭火、笑聲與人情味，一個留下茶園、晨霧與回甘。筑後的心動，是熱鬧之後的安靜餘韻。
+      </div>
+      <button class="vote-btn" onclick="vote('cp4', '炭火茶香餘韻')">投給這組 CP</button>
+      <div class="result">
+        <span id="cp4-count">0</span> 票｜<span id="cp4-percent">0</span>%
+        <div class="bar-wrap"><div class="bar" id="cp4-bar"></div></div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="bottom-area">
+    <h2>目前總票數：<span id="total-votes">0</span> 票</h2>
+    <div id="vote-status"></div>
+    <button class="admin-reset-btn" onclick="adminResetVotes()">重新開始投票</button>
+  </div>
+
+  <footer>
+    福岡考察企劃｜心動的信號：福岡篇
+  </footer>
+
+  <script>
+    let votes = {
+      cp1: 0,
+      cp2: 0,
+      cp3: 0,
+      cp4: 0
+    };
+
+    const cpNames = {
+      cp1: "博多湯辣戀曲",
+      cp2: "港町焗香心動",
+      cp3: "煤都辛甜記憶",
+      cp4: "炭火茶香餘韻"
+    };
+
+    const adminPassword = "122800";
+
+    let hasVoted = false;
+    let votedFor = "";
+
+    const savedVotes = localStorage.getItem("fukuokaCpVotes");
+    const savedHasVoted = localStorage.getItem("fukuokaHasVoted");
+    const savedVotedFor = localStorage.getItem("fukuokaVotedFor");
+
+    if (savedVotes) {
+      votes = JSON.parse(savedVotes);
+    }
+
+    if (savedHasVoted === "true") {
+      hasVoted = true;
+    }
+
+    if (savedVotedFor) {
+      votedFor = savedVotedFor;
+    }
+
+    function vote(cp, cpName) {
+      if (hasVoted) {
+        alert("你已經投過票了，本投票一次一票。");
+        return;
+      }
+
+      votes[cp]++;
+      hasVoted = true;
+      votedFor = cpName;
+
+      localStorage.setItem("fukuokaCpVotes", JSON.stringify(votes));
+      localStorage.setItem("fukuokaHasVoted", "true");
+      localStorage.setItem("fukuokaVotedFor", cpName);
+
+      updateResults();
+      disableVoteButtons();
+
+      alert("投票成功！你投給了：" + cpName);
+    }
+
+    function updateResults() {
+      const total = votes.cp1 + votes.cp2 + votes.cp3 + votes.cp4;
+      document.getElementById("total-votes").textContent = total;
+
+      for (let cp in votes) {
+        const count = votes[cp];
+        const percent = total === 0 ? 0 : Math.round((count / total) * 100);
+
+        document.getElementById(cp + "-count").textContent = count;
+        document.getElementById(cp + "-percent").textContent = percent;
+        document.getElementById(cp + "-bar").style.width = percent + "%";
+      }
+
+      updateLeader();
+
+      const voteStatus = document.getElementById("vote-status");
+
+      if (hasVoted) {
+        voteStatus.textContent = "你已投票給：" + votedFor;
+      } else {
+        voteStatus.textContent = "你尚未投票";
+      }
+    }
+
+    function updateLeader() {
+      const total = votes.cp1 + votes.cp2 + votes.cp3 + votes.cp4;
+      const leaderName = document.getElementById("leader-name");
+
+      if (total === 0) {
+        leaderName.textContent = "尚未有 CP 領先";
+        return;
+      }
+
+      const maxVotes = Math.max(votes.cp1, votes.cp2, votes.cp3, votes.cp4);
+      let leaders = [];
+
+      for (let cp in votes) {
+        if (votes[cp] === maxVotes) {
+          leaders.push(cpNames[cp]);
+        }
+      }
+
+      if (leaders.length === 1) {
+        leaderName.textContent = leaders[0] + "｜" + maxVotes + " 票領先中";
+      } else {
+        leaderName.textContent = leaders.join("、") + "｜目前並列第一";
+      }
+    }
+
+    function disableVoteButtons() {
+      const buttons = document.querySelectorAll(".vote-btn");
+
+      buttons.forEach(button => {
+        button.disabled = hasVoted;
+      });
+    }
+
+    function adminResetVotes() {
+      const inputPassword = prompt("請輸入管理密碼，才能重新開始投票：");
+
+      if (inputPassword === null) {
+        return;
+      }
+
+      if (inputPassword !== adminPassword) {
+        alert("密碼錯誤，無法重新開始投票。");
+        return;
+      }
+
+      const confirmReset = confirm("密碼正確。確定要清除所有投票資料並重新開始嗎？");
+
+      if (!confirmReset) {
+        return;
+      }
+
+      votes = {
+        cp1: 0,
+        cp2: 0,
+        cp3: 0,
+        cp4: 0
+      };
+
+      hasVoted = false;
+      votedFor = "";
+
+      localStorage.removeItem("fukuokaCpVotes");
+      localStorage.removeItem("fukuokaHasVoted");
+      localStorage.removeItem("fukuokaVotedFor");
+
+      updateResults();
+      disableVoteButtons();
+
+      alert("投票已重新開始。");
+    }
+
+    updateResults();
+    disableVoteButtons();
+  </script>
+</body>
+</html>
